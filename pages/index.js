@@ -56,7 +56,8 @@ export default function Home({ articles }) {
 
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async (context) => {
-  await store.dispatch(getPosts())
+  const {req} = context
+  await store.dispatch(getPosts(req))
 
   // Check if the user is authenticated on the server...
   const session = await getSession(context);

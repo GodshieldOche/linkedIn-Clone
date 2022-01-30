@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import absoluteUrl from 'next-absolute-url'
 
 
 
 export const getPosts = createAsyncThunk(
     `posts/getPosts`,
-    async (obj, { rejectWithValue }) => {
+    async (req, { rejectWithValue }) => {
+        const { origin } = absoluteUrl(req)
         try {
-            const { data } = await axios.get(`http://localhost:3000/api/posts`)
+            const { data } = await axios.get(`${origin}/api/posts`)
             return data
         } catch (error) {
             console.log(rejectWithValue(error))
